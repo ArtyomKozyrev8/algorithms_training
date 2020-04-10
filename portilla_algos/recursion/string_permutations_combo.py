@@ -1,6 +1,3 @@
-# not finished!!!
-
-
 def string_permutations_combos(s: str) -> list:
     """
     Returns number of  possible string letters combinations
@@ -10,13 +7,14 @@ def string_permutations_combos(s: str) -> list:
     assert isinstance(s, str), "s should be string"
 
     if len(s) <= 1:
-        return s
+        return [s]
 
     combos = []
     for i, letter in enumerate(s):
-        combos.append(letter + string_permutations_combos(s[:i] + s[i+1:]))
+        for perm in string_permutations_combos(s[:i] + s[i+1:]):
+            combos.append(letter + perm)
     return combos
 
 
 if __name__ == '__main__':
-    print(string_permutations_combos("ab"))
+    print(string_permutations_combos("abc"))
