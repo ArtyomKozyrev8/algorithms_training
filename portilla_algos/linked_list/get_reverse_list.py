@@ -11,7 +11,6 @@ def make_reverse_list(x: LinkedListNode):
     assert type(x) == LinkedListNode
     CUR = x
     PREV = None
-    NEXT = None
     while CUR:
         NEXT = CUR.next_node
         CUR.next_node = PREV
