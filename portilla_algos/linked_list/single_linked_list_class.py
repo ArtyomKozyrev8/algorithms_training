@@ -5,21 +5,33 @@ SingleLikedList - represents Single Linked List Class
 
 
 class Node:
+    """
+    Node is the class which describes node in single linked list and similar structures
+    """
     def __init__(self, value):
         self.value = value
         self.next_node = None
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f"Node({self.value})"
 
 
 class SingleLikedList:
+    """
+    SingleLikedList is the class which describes Single Linked List and it's methods
+    """
     def __init__(self):
-        self.head_node = None
+        self.head_node = None  # the first node in the instance
+        self.number_of_elements = 0  # number of Nodes in the SingleLikedList
 
-    def __repr__(self):
+    def __repr__(self) -> str:
+        """
+        The method not only provide sting presentation of the class, but also checks if there is loop
+        inside the instance of the SingleLikedList class.
+        :return: string presentation of class instance
+        """
         if not self.check_if_loop_in_list():  # we consider looped linked list as incorrect
-            r = ""
+            r = ""  # this is string presentation of the class
             cur = self.head_node
             if not cur:
                 return r
@@ -35,16 +47,33 @@ class SingleLikedList:
         else:
             return "Incorrect linked list! Loop in found!"
 
+    def __len__(self) -> int:
+        """Provides number of node in SingleLikedList instance"""
+        return self.number_of_elements
+
     def add_to_head(self, node: Node):
+        """
+        Adds node to the head of SingleLikedList
+        :param node: new node of the instance
+        :return:
+        """
         assert isinstance(node, Node), "node should be instance of Node class"
         node.next_node = self.head_node
         self.head_node = node
+        self.number_of_elements += 1
 
-    def remove_from_head(self):
+    def remove_from_head(self) -> None:
+        """Removes node if any is available from head of the SingleLikedList"""
         if self.head_node:
             self.head_node = self.head_node.next_node
+            self.number_of_elements -= 1
 
-    def add_to_tail(self, node):
+    def add_to_tail(self, node: Node) -> None:
+        """
+        Adds a new node in the tail of SingleLikedList
+        :param node: new node of the instance
+        :return:
+        """
         assert isinstance(node, Node), "node should be instance of Node class"
         if not self.head_node:
             self.head_node = node
@@ -55,7 +84,10 @@ class SingleLikedList:
 
             cur.next_node = node
 
-    def remove_from_tail(self):
+        self.number_of_elements += 1
+
+    def remove_from_tail(self) -> None:
+        """Removes node from tail of the list if any is available"""
         if self.head_node:
             prev = None
             cur = self.head_node
@@ -67,7 +99,10 @@ class SingleLikedList:
             else:
                 self.head_node = None
 
-    def reverse_list(self):
+            self.number_of_elements -= 1
+
+    def reverse_list(self) -> None:
+        """Reverse nodes in the list"""
         prev_node = None
         cur = self.head_node
         while cur:
@@ -94,7 +129,12 @@ class SingleLikedList:
                 return True
         return False
 
-    def get_nth_element_from_head(self, n: int):
+    def get_nth_element_from_head(self, n: int) -> Node:
+        """
+        Returns the n-th element of the list from the head if any is available
+        :param n: the order number of the element if count from start of the list
+        :return: the n-th node from head of the list
+        """
         assert isinstance(n, int), "n should be int"
         assert n >= 1, "n should be >= 1"
         cur = self.head_node
@@ -106,6 +146,11 @@ class SingleLikedList:
         return
 
     def get_nth_element_from_tail(self, n: int):
+        """
+        Returns the n-th element of the list from the head if any is available
+        :param n: the order number of the element if count from start of the list
+        :return: the n-th node from head of the list
+        """
         assert isinstance(n, int), "n should be int"
         assert n >= 1, "n should be >= 1"
         n += 1
@@ -115,29 +160,33 @@ class SingleLikedList:
                 return
             cur = cur.next_node
             n -= 1
-        nth_from_tail = cur
+        nth_from_head = cur
 
         cur = self.head_node
-        while nth_from_tail:
+        while nth_from_head:
             cur = cur.next_node
-            nth_from_tail = nth_from_tail.next_node
-        return cur
+            nth_from_head = nth_from_head.next_node
+        return cur  # nth from tail element
 
 
 if __name__ == '__main__':
     x = SingleLikedList()
+    print(len(x))
     ns = [Node(i) for i in range(1, 15)]
     for i in ns:
         x.add_to_head(i)
     n100 = Node(100)
     x.add_to_tail(n100)
     print(x)
+    print(len(x))
     x.reverse_list()
     print(x)
+    print(len(x))
     x.remove_from_head()
     x.remove_from_head()
     x.remove_from_tail()
     print(x)
+    print(len(x))
     print(x.get_nth_element_from_head(11))
     print(x.get_nth_element_from_tail(3))
 
