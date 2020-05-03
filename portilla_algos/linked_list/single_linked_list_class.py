@@ -1,19 +1,41 @@
 """
 Node - is a composite part of Single Linked List Class
+
 SingleLikedList - represents Single Linked List Class
+
+SingleLinkedListError - is a base Error for all custom errors of the module
+
+SetAfterNthMemberError - error which take place if we are trying to put element in SingleLikedList after element number
+which does not exist. Derived from SingleLinkedListError.
+
+SingleLinkedListError - error which take place if we are trying to put element in SingleLikedList before element number
+which does not exist. Derived from SingleLinkedListError.
 """
 
 
 class Node:
-    """
-    Node is the class which describes node in single linked list and similar structures
-    """
+    """Node is the class which describes node in single linked list and similar structures"""
     def __init__(self, value):
         self.value = value
         self.next_node = None
 
     def __repr__(self) -> str:
         return f"Node({self.value})"
+
+
+class SingleLinkedListError(Exception):
+    """Base class of SingleLinkedList Errors"""
+    pass
+
+
+class SetAfterNthMemberError(SingleLinkedListError):
+    """Raised if we are trying to put element in SingleLikedList after element number which does not exist"""
+    pass
+
+
+class SetBeforeNthMemberError(SingleLinkedListError):
+    """Raised if we are trying to put element in SingleLikedList after element number which does not exist"""
+    pass
 
 
 class SingleLikedList:
@@ -50,6 +72,28 @@ class SingleLikedList:
     def __len__(self) -> int:
         """Provides number of node in SingleLikedList instance"""
         return self.number_of_elements
+
+    def __iter__(self):
+        """Allow to iterate through element of the linked list"""
+        cur = self.head_node
+        while cur:
+            yield cur
+            cur = cur.next_node
+
+    def __getitem__(self, item: int) -> Node:
+        """Allows to get element of linked list by it's index"""
+        if item > len(self) - 1:
+            raise IndexError
+        if item < 0:
+            raise IndexError
+
+        cur_index = 0
+        cur = self.head_node
+        while cur_index != item:
+            cur = cur.next_node
+            cur_index += 1
+        return cur
+
 
     def add_to_head(self, node: Node):
         """
@@ -145,7 +189,7 @@ class SingleLikedList:
                 return cur
         return
 
-    def get_nth_element_from_tail(self, n: int):
+    def get_nth_element_from_tail(self, n: int) -> Node:
         """
         Returns the n-th element of the list from the head if any is available
         :param n: the order number of the element if count from start of the list
@@ -168,6 +212,65 @@ class SingleLikedList:
             nth_from_head = nth_from_head.next_node
         return cur  # nth from tail element
 
+    def insert_element_after_nth_member(self, node: Node, position: int) -> None:
+        """
+        Inserts element after the nth element of the list
+        :param node: new node we would like to insert in the list
+        :param position: the order number of element we would like to put a new node after
+        :return:
+        """
+        assert isinstance(node, Node), "node should be instance of Node class"
+        assert isinstance(position, int), "position should be integer"
+        assert position >= 1, "position should be >= 1"
+
+        if len(self) < position:
+            raise SetAfterNthMemberError(
+                f"Length of list is {len(self)}, there is no element {position} to put new element after it"
+            )
+        cur_index = 0
+        cur = self.head_node
+        while cur_index < position - 1:
+            cur = cur.next_node
+            cur_index += 1
+
+        next_node = cur.next_node
+        cur.next_node = node
+        node.next_node = next_node
+        self.number_of_elements += 1
+
+    def insert_element_before_nth_element(self, node: Node, position: int) -> None:
+        """
+        Inserts element before the nth element of the list
+        :param node: new node we would like to insert in the list
+        :param position: the order number of element we would like to put a new node before
+        :return:
+        """
+        assert isinstance(node, Node), "node should be instance of Node class"
+        assert isinstance(position, int), "position should be integer"
+        assert position >= 1, "position should be >= 1"
+
+        if len(self) < position:
+            raise SetBeforeNthMemberError(
+                f"Length of list is {len(self)}, there is no element {position} to put new element before it"
+            )
+
+        if position == 1:
+            next_node = self.head_node
+            self.head_node = node
+            self.head_node.next_node = next_node
+        else:
+            cur_index = 0
+            cur = self.head_node
+            while cur_index < position - 1:
+                prev_node = cur
+                cur = cur.next_node
+                cur_index += 1
+
+            node.next_node = cur
+            prev_node.next_node = node
+
+        self.number_of_elements += 1
+
 
 if __name__ == '__main__':
     x = SingleLikedList()
@@ -186,9 +289,16 @@ if __name__ == '__main__':
     x.remove_from_head()
     x.remove_from_tail()
     print(x)
+    # print(len(x))
+    # print(x.get_nth_element_from_head(11))
+    # print(x.get_nth_element_from_tail(3))
+    x.insert_element_before_nth_element(Node(1000), 11)
+    print(x)
+    #for i in x:
+        #print(i)
+    print(x[12])
     print(len(x))
-    print(x.get_nth_element_from_head(11))
-    print(x.get_nth_element_from_tail(3))
+
 
 
     #y.add_to_head(Node(100))
