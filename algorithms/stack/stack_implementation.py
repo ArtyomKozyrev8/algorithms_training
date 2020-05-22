@@ -6,6 +6,9 @@ class Stack:
     def __init__(self):
         self.items = []
 
+    def __str__(self):
+        return str(self.items)
+
     def pop(self):
         """remove element from stack if stack is not empty"""
         if not self.is_empty():
