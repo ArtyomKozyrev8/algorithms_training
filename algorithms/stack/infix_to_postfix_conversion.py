@@ -54,7 +54,7 @@ def convert_from_infix_to_postfix(infix_str: str) -> str:
 
 if __name__ == '__main__':
     tests = ["A + B * C + D", "( A + B ) * ( C + D )", "A * B + C * D", "A + B + C + D",
-             "( A + B ) * C - ( D - E ) * ( F + G )"]
+             "( A + B ) * C - ( D - E ) * ( F + G )", "( ( A + B ) * (C + D) ) + E"]
     results = {i: convert_from_infix_to_postfix(i) for i in tests}
     for k, v in results.items():
         print(f"{k} : {v}")
