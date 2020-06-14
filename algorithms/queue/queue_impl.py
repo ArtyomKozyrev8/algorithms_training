@@ -23,8 +23,8 @@ class MyQueue:
 
     def is_empty(self):
         if self.items:
-            return True
-        return False
+            return False
+        return True
 
     def __repr__(self):
         return f"MyQueue({self.items})"
