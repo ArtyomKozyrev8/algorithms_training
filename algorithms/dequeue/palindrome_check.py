@@ -1,5 +1,6 @@
 from algorithms.dequeue.deque_impl import MyDequeEmptyError, MyDeque
 
+
 def check_if_word_is_palindrome(word: str) -> bool:
     """
     Checks if the word is palindrome.
@@ -20,6 +21,7 @@ def check_if_word_is_palindrome(word: str) -> bool:
         if rear != front:
             return False
     return True
+
 
 if __name__ == '__main__':
     print(check_if_word_is_palindrome(""))
