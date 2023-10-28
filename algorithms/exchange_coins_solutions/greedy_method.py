@@ -37,4 +37,4 @@ if __name__ == '__main__':
     )
 
     for item in inputs:
-        exchange_greedy(item[0]) == item[1], item[2]
+        assert exchange_greedy(item[0]) == (item[1], item[2])
