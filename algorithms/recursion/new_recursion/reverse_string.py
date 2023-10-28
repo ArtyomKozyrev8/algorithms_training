@@ -1,11 +1,14 @@
-def reverse_str(x: str) -> str:
-    """Take string and returns the revert form of the string"""
-    if len(x) <= 1:
-        return x
-    return x[-1] + reverse_str(x[:len(x) - 1])
+def reverse_str_recursive(string_: str) -> str:
+    new_str = ""
+
+    if not string_:
+        new_str = ""
+    else:
+        new_str += string_[-1] + reverse_str_recursive(string_[0: len(string_) - 1])
+
+    return new_str
 
 
 if __name__ == '__main__':
-    print(reverse_str("abcd"))
-    print(reverse_str(""))
-    print(reverse_str("a"))
+    for str_ in ("abcd", "", "a", "ab", "aaa"):
+        assert reverse_str_recursive(str_) == str_[::-1]
