@@ -1,13 +1,40 @@
-def sum_of_numbers(x: list) -> float:
-    """recursive function to find sum of numbers in the list"""
-    if not x:
-        return 0
-    if len(x) == 1:
-        return x[0]
-    return x[0] + sum_of_numbers(x[1:])
+"""
+Calculate the sum of list of numbers.
+"""
+
+from typing import List
+
+
+def sum_of_numbers(list_: List[int]) -> int:
+    s = 0
+    for num in list_:
+        s += num
+
+    return s
+
+
+def sum_of_numbers_recursion(list_: List[int]) -> int:
+    s = 0
+
+    if not list_:
+        s = 0
+    elif len(list_) == 1:
+        s += list_[0]
+    else:
+        s += list_[0] + sum_of_numbers_recursion(list_[1:])
+
+    return s
 
 
 if __name__ == '__main__':
-    print(sum_of_numbers([1, 2, 3, 5, 9, 12]))
-    print(sum_of_numbers([]))
-    print(sum_of_numbers([4]))
+    # structure of lists items: ([values to sum], answer)
+    lists = (
+        ([1, 2, 3], 6),
+        ([], 0),
+        ([-4, 4, 0], 0),
+        ([2, 2], 4),
+        ([8, -4, 4, 1], 9),
+    )
+
+    for item in lists:
+        assert sum_of_numbers(item[0]) == sum_of_numbers_recursion(item[0]) == item[1]
