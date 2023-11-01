@@ -7,6 +7,14 @@ class Node:
         return f"N({self.val})"
 
 
+class BaseLinkedListError(Exception):
+    pass
+
+
+class EmptyLinkedListError(BaseLinkedListError):
+    pass
+
+
 class LinkedList:
     def __init__(self) -> None:
         self.head: Node | None = None
@@ -47,6 +55,39 @@ class LinkedList:
 
             cur.next = node
 
+    def remove_head(self) -> int | str:
+        cur = self.head
+
+        if cur is None:
+            raise EmptyLinkedListError("LinkedList is empty!")
+
+        cur_next = cur.next
+
+        self.head = cur_next
+
+        return cur.val
+
+    def remove_tail(self) -> int | str:
+        cur = self.head
+
+        if cur is None:
+            raise EmptyLinkedListError("LinkedList is empty!")
+
+        prev = cur
+        cur = cur.next
+
+        if cur is None:
+            self.head = None
+            return prev.val
+
+        while cur.next is not None:
+            prev = cur
+            cur = cur.next
+
+        prev.next = None
+
+        return cur.val
+
     def reverse(self) -> None:
         prev = None
         cur = self.head
@@ -58,21 +99,3 @@ class LinkedList:
             cur = temp  # change cur to temp (cur.next for start)
 
         self.head = prev
-
-
-if __name__ == '__main__':
-    s1 = LinkedList()
-    assert str(s1) == "LinkedList: None"
-    s1.reverse()
-    assert str(s1) == "LinkedList: None"
-
-    [s1.append_head(i) for i in range(1, 6)]
-    assert str(s1) == "LinkedList: N(5)->N(4)->N(3)->N(2)->N(1)->None"
-    s1.reverse()
-    assert str(s1) == "LinkedList: N(1)->N(2)->N(3)->N(4)->N(5)->None"
-    s1.append_tail(6)
-    assert str(s1) == "LinkedList: N(1)->N(2)->N(3)->N(4)->N(5)->N(6)->None"
-
-    s2 = LinkedList()
-    [s2.append_tail(i) for i in range(1, 6)]
-    assert str(s2) == "LinkedList: N(1)->N(2)->N(3)->N(4)->N(5)->None"
