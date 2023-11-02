@@ -43,6 +43,19 @@ class LinkedList:
 
         return len_
 
+    def __contains__(self, item: int | str) -> bool:
+        cur = self.head
+        contains = False
+
+        while cur is not None:
+            if cur.val == item:
+                contains = True
+                break
+
+            cur = cur.next
+
+        return contains
+
     def append_head(self, val: int | str) -> None:
         node = Node(val)
 
