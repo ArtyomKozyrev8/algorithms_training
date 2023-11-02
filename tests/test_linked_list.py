@@ -107,6 +107,18 @@ def test___contains__() -> None:
     assert (10 in s) is False
 
 
+def test_iteration() -> None:
+    s = LinkedList()
+    [s.append_tail(i) for i in range(1, 6)]
+    assert str(s) == "LinkedList: N(1)->N(2)->N(3)->N(4)->N(5)->None"
+
+    for j in range(3):
+        expected_val = 1
+        for cur_val in s:
+            assert cur_val == expected_val
+            expected_val += 1
+
+
 def test_reverse() -> None:
     s = LinkedList()
     s.reverse()

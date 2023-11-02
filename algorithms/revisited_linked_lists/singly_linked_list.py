@@ -1,3 +1,6 @@
+from collections.abc import Sequence
+
+
 class Node:
     def __init__(self, val: int | str) -> None:
         self.next: "Node" | None = None
@@ -15,9 +18,11 @@ class EmptyLinkedListError(BaseLinkedListError):
     pass
 
 
-class LinkedList:
+class LinkedList(Sequence):
     def __init__(self) -> None:
         self.head: Node | None = None
+        # self.cur_node is used for iterations (see __iter__ and __next__)
+        self.cur_node: Node | None = self.head
 
     def __str__(self) -> str:
         cur = self.head
@@ -55,6 +60,18 @@ class LinkedList:
             cur = cur.next
 
         return contains
+
+    def __iter__(self) -> "LinkedList":
+        self.cur_node = self.head
+        return self
+
+    def __next__(self) -> int | str:
+        while self.cur_node is not None:
+            cur_val = self.cur_node.val
+            self.cur_node = self.cur_node.next
+            return cur_val
+
+        raise StopIteration
 
     def append_head(self, val: int | str) -> None:
         node = Node(val)
