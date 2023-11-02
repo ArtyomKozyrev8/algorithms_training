@@ -33,6 +33,16 @@ class LinkedList:
 
         return f"LinkedList: {strings}"
 
+    def __len__(self) -> int:
+        len_ = 0
+        cur = self.head
+
+        while cur is not None:
+            len_ += 1
+            cur = cur.next
+
+        return len_
+
     def append_head(self, val: int | str) -> None:
         node = Node(val)
 

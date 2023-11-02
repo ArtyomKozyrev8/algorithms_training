@@ -87,6 +87,14 @@ def test___getitem__() -> None:
         s[1]
 
 
+def test___len__() -> None:
+    s = LinkedList()
+    assert len(s) == 0
+    for i in range(1, 6):
+        s.append_head(i)
+        assert len(s) == i
+
+
 def test_reverse() -> None:
     s = LinkedList()
     s.reverse()
