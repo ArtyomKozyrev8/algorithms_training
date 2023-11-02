@@ -88,6 +88,21 @@ class LinkedList:
 
         return cur.val
 
+    def get_by_index(self, index: int) -> int | str:
+        cur_index = 0
+        cur = self.head
+
+        while cur is not None:
+            if cur_index == index:
+                break
+
+            cur = cur.next
+            cur_index += 1
+        else:
+            raise IndexError(f"No element with index: {index}")
+
+        return cur.val
+
     def reverse(self) -> None:
         prev = None
         cur = self.head
