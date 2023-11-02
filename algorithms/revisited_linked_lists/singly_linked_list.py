@@ -88,7 +88,7 @@ class LinkedList:
 
         return cur.val
 
-    def get_by_index(self, index: int) -> int | str:
+    def __getitem__(self, index: int) -> int | str:
         cur_index = 0
         cur = self.head
 

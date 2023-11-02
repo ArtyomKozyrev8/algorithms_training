@@ -65,26 +65,26 @@ def test_remove_tail() -> None:
     assert str(s) == "LinkedList: N(0)->N(2)->None"
 
 
-def test_get_by_index() -> None:
+def test___getitem__() -> None:
     s = LinkedList()
     assert str(s) == "LinkedList: None"
     [s.append_head(i) for i in range(1, 6)]
     assert str(s) == "LinkedList: N(5)->N(4)->N(3)->N(2)->N(1)->None"
 
     for i in range(0, 5):
-        assert s.get_by_index(i) == 5 - i
+        assert s[i] == 5 - i
 
     with pytest.raises(IndexError):
-        s.get_by_index(5)
+        s[5]
 
     s = LinkedList()
     with pytest.raises(IndexError):
-        s.get_by_index(0)
+        s[0]
 
     s.append_head(1)
-    assert s.get_by_index(0) == 1
+    assert s[0] == 1
     with pytest.raises(IndexError):
-        s.get_by_index(1)
+        s[1]
 
 
 def test_reverse() -> None:
