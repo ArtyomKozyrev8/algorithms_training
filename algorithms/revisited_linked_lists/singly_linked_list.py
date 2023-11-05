@@ -10,19 +10,12 @@ class Node:
         return f"N({self.val})"
 
 
-class BaseLinkedListError(Exception):
-    pass
-
-
-class EmptyLinkedListError(BaseLinkedListError):
-    pass
-
-
 class LinkedList(Sequence):
     def __init__(self) -> None:
         self.head: Node | None = None
         # self.cur_node is used for iterations (see __iter__ and __next__)
         self.cur_node: Node | None = self.head
+        self.class_name = self.__class__.__name__
 
     def __str__(self) -> str:
         cur = self.head
@@ -36,7 +29,7 @@ class LinkedList(Sequence):
 
         strings = "->".join(map(str, strings))
 
-        return f"LinkedList: {strings}"
+        return f"{self.class_name}: {strings}"
 
     def __len__(self) -> int:
         len_ = 0
@@ -99,7 +92,7 @@ class LinkedList(Sequence):
         cur = self.head
 
         if cur is None:
-            raise EmptyLinkedListError("LinkedList is empty!")
+            raise IndexError(f"{self.class_name} instance is empty!")
 
         cur_next = cur.next
 
@@ -111,7 +104,7 @@ class LinkedList(Sequence):
         cur = self.head
 
         if cur is None:
-            raise EmptyLinkedListError("LinkedList is empty!")
+            raise IndexError(f"{self.class_name} instance is empty!")
 
         prev = cur
         cur = cur.next
@@ -128,6 +121,27 @@ class LinkedList(Sequence):
 
         return cur.val
 
+    def remove_index(self, index: int) -> int | str:
+        prev = None
+        cur = self.head
+
+        cur_index = 0
+        while cur is not None:
+            if cur_index == index:
+                searched_item_val = cur.val
+                if prev is not None:
+                    prev.next = cur.next
+                else:
+                    self.head = cur.next
+
+                return searched_item_val
+            else:
+                cur_index += 1
+                prev = cur
+                cur = cur.next
+
+        raise IndexError(f"{self.__class__.__name__} instance does not contain index: {index}!")
+
     def __getitem__(self, index: int) -> int | str:
         cur_index = 0
         cur = self.head
@@ -139,7 +153,7 @@ class LinkedList(Sequence):
             cur = cur.next
             cur_index += 1
         else:
-            raise IndexError(f"No element with index: {index}")
+            raise IndexError(f"{self.class_name} instance does not contain index: {index}")
 
         return cur.val
 

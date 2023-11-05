@@ -1,6 +1,6 @@
 import pytest
 
-from algorithms.revisited_linked_lists.singly_linked_list import LinkedList, EmptyLinkedListError
+from algorithms.revisited_linked_lists.singly_linked_list import LinkedList
 
 
 def test_append_head() -> None:
@@ -19,7 +19,7 @@ def test_append_tail() -> None:
 
 def test_remove_head() -> None:
     s = LinkedList()
-    with pytest.raises(EmptyLinkedListError):
+    with pytest.raises(IndexError):
         s.remove_head()
 
     [s.append_tail(i) for i in range(1, 3)]
@@ -30,13 +30,13 @@ def test_remove_head() -> None:
     val = s.remove_head()
     assert val == 2
     assert str(s) == "LinkedList: None"
-    with pytest.raises(EmptyLinkedListError):
+    with pytest.raises(IndexError):
         s.remove_head()
 
 
 def test_remove_tail() -> None:
     s = LinkedList()
-    with pytest.raises(EmptyLinkedListError):
+    with pytest.raises(IndexError):
         s.remove_tail()
 
     [s.append_tail(i) for i in range(1, 3)]
@@ -50,7 +50,7 @@ def test_remove_tail() -> None:
     assert val == 1
     assert str(s) == "LinkedList: None"
 
-    with pytest.raises(EmptyLinkedListError):
+    with pytest.raises(IndexError):
         s.remove_tail()
 
     s.append_head(0)
@@ -117,6 +117,42 @@ def test_iteration() -> None:
         for cur_val in s:
             assert cur_val == expected_val
             expected_val += 1
+
+
+def test_remove_index() -> None:
+    s = LinkedList()
+    [s.append_tail(i) for i in range(0, 6)]
+    assert str(s) == "LinkedList: N(0)->N(1)->N(2)->N(3)->N(4)->N(5)->None"
+
+    with pytest.raises(IndexError):
+        assert s.remove_index(6)
+
+    assert s.remove_index(0) == 0
+    assert str(s) == "LinkedList: N(1)->N(2)->N(3)->N(4)->N(5)->None"
+
+    assert s.remove_index(4) == 5
+    assert str(s) == "LinkedList: N(1)->N(2)->N(3)->N(4)->None"
+
+    assert s.remove_index(2) == 3
+    assert str(s) == "LinkedList: N(1)->N(2)->N(4)->None"
+
+    with pytest.raises(IndexError):
+        assert s.remove_index(6)
+
+    assert s.remove_index(1) == 2
+    assert str(s) == "LinkedList: N(1)->N(4)->None"
+
+    assert s.remove_index(1) == 4
+    assert str(s) == "LinkedList: N(1)->None"
+
+    assert s.remove_index(0) == 1
+    assert str(s) == "LinkedList: None"
+
+    with pytest.raises(IndexError):
+        assert s.remove_index(0)
+
+    [s.append_tail(i) for i in range(0, 6)]
+    assert str(s) == "LinkedList: N(0)->N(1)->N(2)->N(3)->N(4)->N(5)->None"
 
 
 def test_reverse() -> None:
