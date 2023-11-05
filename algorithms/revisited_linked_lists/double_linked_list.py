@@ -30,7 +30,8 @@ class DLL:
             strings.append(cur)
             cur = cur.next
 
-        strings.append(str(cur))  # append None ad well
+        if not strings:
+            strings.append(str(cur))  # append None ad well
 
         strings = "<->".join(map(str, strings))
 
@@ -59,6 +60,24 @@ class DLL:
         node.next = cur
         cur.prev = node
 
+        return
+
+    def append_tail(self, val: int | str) -> None:
+        node = Node(val)
+
+        if self.head is None:
+            self.head = node
+            return
+
+        cur = self.head
+        while cur.next is not None:
+            cur = cur.next
+
+        cur.next = node
+        node.prev = cur
+
+        return
+
 
 if __name__ == '__main__':
     s = DLL()
@@ -74,3 +93,16 @@ if __name__ == '__main__':
 
     s.append_head(4)
     print(s)
+
+    print("*" * 100)
+    s = DLL()
+    print(s)
+    s.append_tail(1)
+    print(s)
+    s.append_tail(2)
+    print(s)
+    s.append_tail(3)
+    print(s)
+    s.append_tail(4)
+    print(s)
+
