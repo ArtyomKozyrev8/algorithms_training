@@ -155,6 +155,36 @@ def test_remove_index() -> None:
     assert str(s) == "LinkedList: N(0)->N(1)->N(2)->N(3)->N(4)->N(5)->None"
 
 
+def test_insert_index() -> None:
+    s = LinkedList()
+    s.insert_index(index=0, val=0)
+    assert str(s) == "LinkedList: N(0)->None"
+
+    s.insert_index(index=0, val=1)
+    assert str(s) == "LinkedList: N(1)->N(0)->None"
+
+    s.insert_index(index=5, val=9)
+    assert str(s) == "LinkedList: N(1)->N(0)->N(9)->None"
+
+    s.insert_index(index=0, val=2)
+    assert str(s) == "LinkedList: N(2)->N(1)->N(0)->N(9)->None"
+
+    s.insert_index(index=2, val=3)
+    assert str(s) == "LinkedList: N(2)->N(1)->N(3)->N(0)->N(9)->None"
+
+    s.insert_index(index=3, val=4)
+    assert str(s) == "LinkedList: N(2)->N(1)->N(3)->N(4)->N(0)->N(9)->None"
+
+    s.insert_index(index=1, val=5)
+    assert str(s) == "LinkedList: N(2)->N(5)->N(1)->N(3)->N(4)->N(0)->N(9)->None"
+
+    s.insert_index(index=len(s) - 1, val=6)
+    assert str(s) == "LinkedList: N(2)->N(5)->N(1)->N(3)->N(4)->N(0)->N(6)->N(9)->None"
+
+    s.insert_index(index=len(s), val=7)
+    assert str(s) == "LinkedList: N(2)->N(5)->N(1)->N(3)->N(4)->N(0)->N(6)->N(9)->N(7)->None"
+
+
 def test_reverse() -> None:
     s = LinkedList()
     s.reverse()

@@ -142,6 +142,34 @@ class LinkedList(Sequence):
 
         raise IndexError(f"{self.__class__.__name__} instance does not contain index: {index}!")
 
+    def insert_index(self, index: int, val: int | str) -> None:
+        prev = None
+        cur = self.head
+        new_node = Node(val)
+
+        if self.head is None:
+            self.head = new_node  # if empty, add to head
+            return None
+
+        cur_index = 0
+        while cur is not None:
+            if cur_index == index:
+                if prev is not None:
+                    prev.next = new_node
+                    new_node.next = cur
+                else:
+                    self.head = new_node
+                    new_node.next = cur
+                break
+
+            cur_index += 1
+            prev = cur
+            cur = cur.next
+        else:
+            prev.next = new_node  # append to tail if index is out of range
+
+        return None
+
     def __getitem__(self, index: int) -> int | str:
         cur_index = 0
         cur = self.head
