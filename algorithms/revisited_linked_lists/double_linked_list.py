@@ -62,6 +62,21 @@ class DLL:
 
         return
 
+    def pop_head(self) -> int | str:
+        if self.head is None:
+            raise IndexError(f"{self.class_name} instance is empty!")
+
+        cur = self.head
+        next_cur = cur.next
+
+        if next_cur is None:
+            self.head = None
+        else:
+            self.head = next_cur
+            next_cur.prev = None
+
+        return cur.val
+
     def append_tail(self, val: int | str) -> None:
         node = Node(val)
 
