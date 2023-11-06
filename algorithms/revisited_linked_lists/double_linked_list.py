@@ -13,7 +13,7 @@ class Node:
         if next_ is not None:
             next_ = next_.val
 
-        return f"N({self.val} [{prev}, {next_}])"
+        return f"N({self.val}[{prev}, {next_}])"
 
 
 class DLL:
@@ -33,7 +33,7 @@ class DLL:
         if not strings:
             strings.append(str(cur))  # append None ad well
 
-        strings = "<->".join(map(str, strings))
+        strings = "=".join(map(str, strings))
 
         return f"{self.class_name}: {strings}"
 
@@ -77,32 +77,3 @@ class DLL:
         node.prev = cur
 
         return
-
-
-if __name__ == '__main__':
-    s = DLL()
-    print(s)
-    s.append_head(1)
-    print(s)
-
-    s.append_head(2)
-    print(s)
-
-    s.append_head(3)
-    print(s)
-
-    s.append_head(4)
-    print(s)
-
-    print("*" * 100)
-    s = DLL()
-    print(s)
-    s.append_tail(1)
-    print(s)
-    s.append_tail(2)
-    print(s)
-    s.append_tail(3)
-    print(s)
-    s.append_tail(4)
-    print(s)
-
