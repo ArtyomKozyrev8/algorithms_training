@@ -64,3 +64,29 @@ def test_pop_head() -> None:
     assert str(s) == "DLL: None"
     with pytest.raises(IndexError):
         s.pop_head()
+
+
+def test_pop_tail() -> None:
+    s = DLL()
+    assert str(s) == "DLL: None"
+    with pytest.raises(IndexError):
+        s.pop_tail()
+
+    s.append_head(1)
+    assert str(s) == "DLL: N(1[None, None])"
+    assert s.pop_tail() == 1
+    assert str(s) == "DLL: None"
+
+    [s.append_tail(val) for val in range(1, 5)]
+    assert str(s) == "DLL: N(1[None, 2])=N(2[1, 3])=N(3[2, 4])=N(4[3, None])"
+    assert s.pop_tail() == 4
+    assert str(s) == "DLL: N(1[None, 2])=N(2[1, 3])=N(3[2, None])"
+    assert s.pop_tail() == 3
+    assert str(s) == "DLL: N(1[None, 2])=N(2[1, None])"
+    assert s.pop_tail() == 2
+    assert str(s) == "DLL: N(1[None, None])"
+    assert s.pop_tail() == 1
+    assert str(s) == "DLL: None"
+
+    with pytest.raises(IndexError):
+        s.pop_tail()

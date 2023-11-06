@@ -92,3 +92,23 @@ class DLL:
         node.prev = cur
 
         return
+
+    def pop_tail(self) -> int | str:
+        if self.head is None:
+            raise IndexError(f"{self.class_name} instance is empty!")
+
+        cur = self.head
+
+        while True:
+            if cur.next is None:
+                break
+            else:
+                cur = cur.next
+
+        prev = cur.prev
+        if prev is None:
+            self.head = None
+        else:
+            prev.next = None
+
+        return cur.val
