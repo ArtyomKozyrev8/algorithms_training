@@ -112,3 +112,24 @@ class DLL:
             prev.next = None
 
         return cur.val
+
+    def reverse(self) -> None:
+        if self.head is None:
+            return
+
+        cur = self.head
+        while True:
+            cur_next = cur.next
+            if cur_next is None:
+                old_prev = cur.prev
+                self.head = cur
+                cur.prev = None
+                cur.next = old_prev
+                break
+            else:
+                old_prev = cur.prev
+                cur.next = old_prev
+                cur.prev = cur_next
+                cur = cur_next
+
+        return

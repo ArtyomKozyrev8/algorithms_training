@@ -90,3 +90,31 @@ def test_pop_tail() -> None:
 
     with pytest.raises(IndexError):
         s.pop_tail()
+
+
+def test_reverse() -> None:
+    s = DLL()
+    assert str(s) == "DLL: None"
+    s.reverse()
+    assert str(s) == "DLL: None"
+
+    s.append_head(0)
+    assert str(s) == "DLL: N(0[None, None])"
+    s.reverse()
+    assert str(s) == "DLL: N(0[None, None])"
+    s.append_tail(1)
+    assert str(s) == "DLL: N(0[None, 1])=N(1[0, None])"
+    s.reverse()
+    assert str(s) == "DLL: N(1[None, 0])=N(0[1, None])"
+    s.append_head(2)
+    assert str(s) == "DLL: N(2[None, 1])=N(1[2, 0])=N(0[1, None])"
+    s.reverse()
+    assert str(s) == "DLL: N(0[None, 1])=N(1[0, 2])=N(2[1, None])"
+    s.append_tail(3)
+    assert str(s) == "DLL: N(0[None, 1])=N(1[0, 2])=N(2[1, 3])=N(3[2, None])"
+    s.reverse()
+    assert str(s) == "DLL: N(3[None, 2])=N(2[3, 1])=N(1[2, 0])=N(0[1, None])"
+    s.append_head(4)
+    assert str(s) == "DLL: N(4[None, 3])=N(3[4, 2])=N(2[3, 1])=N(1[2, 0])=N(0[1, None])"
+    s.reverse()
+    assert str(s) == "DLL: N(0[None, 1])=N(1[0, 2])=N(2[1, 3])=N(3[2, 4])=N(4[3, None])"
