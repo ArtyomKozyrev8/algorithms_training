@@ -101,6 +101,30 @@ class DLL(BaseLinkedList):
 
         return cur.val
 
+    def remove_index(self, index: int) -> int | str:
+        cur = self.head
+
+        cur_index = 0
+        while cur is not None:
+            if cur_index == index:
+                prev = cur.prev
+                next_ = cur.next
+                if prev is None:
+                    self.head = next_
+                    if next_ is not None:
+                        next_.prev = prev
+                else:
+                    prev.next = next_
+                    if next_ is not None:
+                        next_.prev = prev
+
+                return cur.val
+            else:
+                cur_index += 1
+                cur = cur.next
+
+        raise IndexError(f"{self.class_name} instance does not contain index: {index}!")
+
     def reverse(self) -> None:
         if self.head is None:
             return

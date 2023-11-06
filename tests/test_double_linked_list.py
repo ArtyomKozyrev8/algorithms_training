@@ -146,6 +146,48 @@ def test_pop_tail() -> None:
         s.pop_tail()
 
 
+def test_remove_index() -> None:
+    s = DLL()
+    [s.append_tail(i) for i in range(0, 6)]
+    assert str(s) == "DLL: N(0[None, 1])=N(1[0, 2])=N(2[1, 3])=N(3[2, 4])=N(4[3, 5])=N(5[4, None])"
+
+    with pytest.raises(IndexError):
+        assert s.remove_index(6)
+
+    assert s.remove_index(0) == 0
+    assert str(s) == "DLL: N(1[None, 2])=N(2[1, 3])=N(3[2, 4])=N(4[3, 5])=N(5[4, None])"
+
+    assert s.remove_index(4) == 5
+    assert str(s) == "DLL: N(1[None, 2])=N(2[1, 3])=N(3[2, 4])=N(4[3, None])"
+
+    assert s.remove_index(2) == 3
+    assert str(s) == "DLL: N(1[None, 2])=N(2[1, 4])=N(4[2, None])"
+
+    with pytest.raises(IndexError):
+        assert s.remove_index(6)
+
+    assert s.remove_index(1) == 2
+    assert str(s) == "DLL: N(1[None, 4])=N(4[1, None])"
+
+    assert s.remove_index(1) == 4
+    assert str(s) == "DLL: N(1[None, None])"
+
+    assert s.remove_index(0) == 1
+    assert str(s) == "DLL: None"
+
+    with pytest.raises(IndexError):
+        assert s.remove_index(0)
+
+    [s.append_tail(i) for i in range(0, 6)]
+    assert str(s) == "DLL: N(0[None, 1])=N(1[0, 2])=N(2[1, 3])=N(3[2, 4])=N(4[3, 5])=N(5[4, None])"
+
+    with pytest.raises(IndexError):
+        assert s.remove_index(10)
+
+    assert s.remove_index(2) == 2
+    assert str(s) == "DLL: N(0[None, 1])=N(1[0, 3])=N(3[1, 4])=N(4[3, 5])=N(5[4, None])"
+
+
 def test_reverse() -> None:
     s = DLL()
     assert str(s) == "DLL: None"
