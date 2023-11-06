@@ -188,6 +188,40 @@ def test_remove_index() -> None:
     assert str(s) == "DLL: N(0[None, 1])=N(1[0, 3])=N(3[1, 4])=N(4[3, 5])=N(5[4, None])"
 
 
+def test_insert_index() -> None:
+    s = DLL()
+    s.insert_index(index=0, val=0)
+    assert str(s) == "DLL: N(0[None, None])"
+
+    s.insert_index(index=0, val=1)
+    assert str(s) == "DLL: N(1[None, 0])=N(0[1, None])"
+
+    s.insert_index(index=5, val=9)
+    assert str(s) == "DLL: N(1[None, 0])=N(0[1, 9])=N(9[0, None])"
+
+    s.insert_index(index=0, val=2)
+    assert str(s) == "DLL: N(2[None, 1])=N(1[2, 0])=N(0[1, 9])=N(9[0, None])"
+
+    s.insert_index(index=2, val=3)
+    assert str(s) == "DLL: N(2[None, 1])=N(1[2, 3])=N(3[1, 0])=N(0[3, 9])=N(9[0, None])"
+
+    s.insert_index(index=3, val=4)
+    assert str(s) == "DLL: N(2[None, 1])=N(1[2, 3])=N(3[1, 4])=N(4[3, 0])=N(0[4, 9])=N(9[0, None])"
+
+    s.insert_index(index=1, val=5)
+    assert str(s) == "DLL: N(2[None, 5])=N(5[2, 1])=N(1[5, 3])=N(3[1, 4])=N(4[3, 0])=N(0[4, 9])=N(9[0, None])"
+
+    s.insert_index(index=len(s) - 1, val=6)
+    assert str(s) == (
+        "DLL: N(2[None, 5])=N(5[2, 1])=N(1[5, 3])=N(3[1, 4])=N(4[3, 0])=N(0[4, 6])=N(6[0, 9])=N(9[6, None])"
+    )
+
+    s.insert_index(index=len(s), val=7)
+    assert str(s) == (
+        "DLL: N(2[None, 5])=N(5[2, 1])=N(1[5, 3])=N(3[1, 4])=N(4[3, 0])=N(0[4, 6])=N(6[0, 9])=N(9[6, 7])=N(7[9, None])"
+    )
+
+
 def test_reverse() -> None:
     s = DLL()
     assert str(s) == "DLL: None"

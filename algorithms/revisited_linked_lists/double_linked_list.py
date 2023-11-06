@@ -125,6 +125,40 @@ class DLL(BaseLinkedList):
 
         raise IndexError(f"{self.class_name} instance does not contain index: {index}!")
 
+    def insert_index(self, index: int, val: int | str) -> None:
+        new_node = Node(val)
+        if self.head is None:
+            self.head = new_node
+            return
+
+        cur_index = 0
+        cur = self.head
+
+        while True:
+            if index == cur_index:
+                prev = cur.prev
+                if prev is None:
+                    self.head = new_node
+                    new_node.next = cur
+                    cur.prev = new_node
+                else:
+                    new_node.prev = prev
+                    prev.next = new_node
+                    new_node.next = cur
+                    cur.prev = new_node
+
+                return
+            else:
+                cur_next = cur.next
+                if cur_next is None:
+                    break
+                cur_index += 1
+                cur = cur_next
+
+        cur.next = new_node
+        new_node.prev = cur
+        return
+
     def reverse(self) -> None:
         if self.head is None:
             return
