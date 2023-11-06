@@ -1,4 +1,7 @@
-class Node:
+from .base_linked_list import BaseNode, BaseLinkedList
+
+
+class Node(BaseNode):
     def __init__(self, val: int | str) -> None:
         self.next: "Node" | None = None
         self.prev: "Node" | None = None
@@ -16,12 +19,7 @@ class Node:
         return f"N({self.val}[{prev}, {next_}])"
 
 
-class DLL:
-    def __init__(self) -> None:
-        self.head: Node | None = None
-        # self.cur_node is used for iterations (see __iter__ and __next__)
-        self.class_name = self.__class__.__name__
-
+class DLL(BaseLinkedList):
     def __str__(self) -> str:
         cur = self.head
         strings = []
@@ -36,16 +34,6 @@ class DLL:
         strings = "=".join(map(str, strings))
 
         return f"{self.class_name}: {strings}"
-
-    def __len__(self) -> int:
-        len_ = 0
-        cur = self.head
-
-        while cur is not None:
-            len_ += 1
-            cur = cur.next
-
-        return len_
 
     def append_head(self, val: int | str) -> None:
         node = Node(val)

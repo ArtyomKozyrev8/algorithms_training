@@ -1,7 +1,7 @@
-from collections.abc import Sequence
+from .base_linked_list import BaseNode, BaseLinkedList
 
 
-class Node:
+class Node(BaseNode):
     def __init__(self, val: int | str) -> None:
         self.next: "Node" | None = None
         self.val: int | str = val
@@ -10,13 +10,7 @@ class Node:
         return f"N({self.val})"
 
 
-class LinkedList(Sequence):
-    def __init__(self) -> None:
-        self.head: Node | None = None
-        # self.cur_node is used for iterations (see __iter__ and __next__)
-        self.cur_node: Node | None = self.head
-        self.class_name = self.__class__.__name__
-
+class LinkedList(BaseLinkedList):
     def __str__(self) -> str:
         cur = self.head
         strings = []
@@ -30,41 +24,6 @@ class LinkedList(Sequence):
         strings = "->".join(map(str, strings))
 
         return f"{self.class_name}: {strings}"
-
-    def __len__(self) -> int:
-        len_ = 0
-        cur = self.head
-
-        while cur is not None:
-            len_ += 1
-            cur = cur.next
-
-        return len_
-
-    def __contains__(self, item: int | str) -> bool:
-        cur = self.head
-        contains = False
-
-        while cur is not None:
-            if cur.val == item:
-                contains = True
-                break
-
-            cur = cur.next
-
-        return contains
-
-    def __iter__(self) -> "LinkedList":
-        self.cur_node = self.head
-        return self
-
-    def __next__(self) -> int | str:
-        while self.cur_node is not None:
-            cur_val = self.cur_node.val
-            self.cur_node = self.cur_node.next
-            return cur_val
-
-        raise StopIteration
 
     def append_head(self, val: int | str) -> None:
         node = Node(val)
@@ -169,21 +128,6 @@ class LinkedList(Sequence):
             prev.next = new_node  # append to tail if index is out of range
 
         return None
-
-    def __getitem__(self, index: int) -> int | str:
-        cur_index = 0
-        cur = self.head
-
-        while cur is not None:
-            if cur_index == index:
-                break
-
-            cur = cur.next
-            cur_index += 1
-        else:
-            raise IndexError(f"{self.class_name} instance does not contain index: {index}")
-
-        return cur.val
 
     def reverse(self) -> None:
         prev = None

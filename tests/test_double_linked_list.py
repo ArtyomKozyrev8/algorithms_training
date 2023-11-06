@@ -41,6 +41,60 @@ def test_append_head() -> None:
     assert str(s) == "DLL: N(6[None, 5])=N(5[6, 4])=N(4[5, 3])=N(3[4, 2])=N(2[3, 1])=N(1[2, 0])=N(0[1, None])"
 
 
+def test___getitem__() -> None:
+    s = DLL()
+    assert str(s) == "DLL: None"
+    [s.append_head(i) for i in range(0, 7)]
+    assert str(s) == "DLL: N(6[None, 5])=N(5[6, 4])=N(4[5, 3])=N(3[4, 2])=N(2[3, 1])=N(1[2, 0])=N(0[1, None])"
+
+    for i in range(0, 6):
+        assert s[i] == 6 - i
+
+    with pytest.raises(IndexError):
+        s[7]
+
+    s = DLL()
+    with pytest.raises(IndexError):
+        s[0]
+
+    s.append_head(1)
+    assert s[0] == 1
+    with pytest.raises(IndexError):
+        s[1]
+
+
+def test___len__() -> None:
+    s = DLL()
+    assert len(s) == 0
+    for i in range(1, 6):
+        s.append_head(i)
+        assert len(s) == i
+
+
+def test___contains__() -> None:
+    s = DLL()
+    assert (0 in s) is False
+    [s.append_head(i) for i in range(0, 7)]
+    assert str(s) == "DLL: N(6[None, 5])=N(5[6, 4])=N(4[5, 3])=N(3[4, 2])=N(2[3, 1])=N(1[2, 0])=N(0[1, None])"
+    for i in range(0, 7):
+        assert (i in s) is True
+
+    assert (7 in s) is False
+    assert (10 in s) is False
+
+
+def test_iteration() -> None:
+    s = DLL()
+    [s.append_head(i) for i in range(0, 7)]
+    assert str(s) == "DLL: N(6[None, 5])=N(5[6, 4])=N(4[5, 3])=N(3[4, 2])=N(2[3, 1])=N(1[2, 0])=N(0[1, None])"
+
+    for j in range(0, 7):
+        expected_val = 6
+        for cur_val in s:
+            assert cur_val == expected_val
+            expected_val -= 1
+
+
 def test_pop_head() -> None:
     s = DLL()
     assert str(s) == "DLL: None"
