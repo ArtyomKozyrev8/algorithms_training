@@ -248,3 +248,12 @@ def test_reverse() -> None:
     assert str(s) == "DLL: N(4[None, 3])=N(3[4, 2])=N(2[3, 1])=N(1[2, 0])=N(0[1, None])"
     s.reverse()
     assert str(s) == "DLL: N(0[None, 1])=N(1[0, 2])=N(2[1, 3])=N(3[2, 4])=N(4[3, None])"
+
+
+def test_is_empty() -> None:
+    s = DLL()
+    assert s.is_empty() is True
+    s.append_head(0)
+    assert s.is_empty() is False
+    s.append_tail(1)
+    assert s.is_empty() is False

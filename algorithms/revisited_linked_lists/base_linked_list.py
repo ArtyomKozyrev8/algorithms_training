@@ -13,6 +13,12 @@ class BaseLinkedList(Sequence):
         self.cur_node: BaseNode | None = self.head
         self.class_name = self.__class__.__name__
 
+    def is_empty(self) -> bool:
+        if self.head is None:
+            return True
+
+        return False
+
     def __len__(self) -> int:
         len_ = 0
         cur = self.head

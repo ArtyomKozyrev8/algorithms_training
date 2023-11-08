@@ -202,3 +202,12 @@ def test_reverse() -> None:
     assert str(s) == "LinkedList: N(7)->N(6)->N(5)->N(4)->N(3)->N(2)->N(1)->N(0)->None"
     s.reverse()
     assert str(s) == "LinkedList: N(0)->N(1)->N(2)->N(3)->N(4)->N(5)->N(6)->N(7)->None"
+
+
+def test_is_empty() -> None:
+    s = LinkedList()
+    assert s.is_empty() is True
+    s.append_tail(0)
+    assert s.is_empty() is False
+    s.append_tail(1)
+    assert s.is_empty() is False
