@@ -1,5 +1,4 @@
-from .base_linked_list import BaseLinkedList
-from .singly_linked_list import Node
+from .singly_linked_list import Node, LinkedList
 
 
 def _more_or_equal(a: int | str, b: int | str, reversed_: bool = True) -> bool:
@@ -9,7 +8,7 @@ def _more_or_equal(a: int | str, b: int | str, reversed_: bool = True) -> bool:
         return a <= b
 
 
-class OrderedLinkedList(BaseLinkedList):
+class OrderedLinkedList(LinkedList):
     def __init__(self, reversed_: bool = False):
         super().__init__()
         self.reversed = reversed_
@@ -41,8 +40,8 @@ class OrderedLinkedList(BaseLinkedList):
 
         return False
 
-    def append(self, item: int | str) -> None:
-        new_node = Node(item)
+    def append(self, val: int | str) -> None:
+        new_node = Node(val)
 
         if self.head is None:
             self.head = new_node
@@ -70,3 +69,15 @@ class OrderedLinkedList(BaseLinkedList):
                 cur = cur.next
 
         return
+
+    def append_head(self, val: int | str) -> None:
+        return self.append(val)
+
+    def append_tail(self, val: int | str) -> None:
+        return self.append(val)
+
+    def reverse(self) -> None:
+        raise AttributeError(f"{self.class_name} does not implement reverse()!")
+
+    def insert_index(self, index: int, val: int | str) -> None:
+        raise AttributeError(f"{self.class_name} does not implement insert_index()!")
