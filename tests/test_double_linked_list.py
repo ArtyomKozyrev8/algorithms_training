@@ -1,6 +1,6 @@
 import pytest
 
-from algorithms.revisited_linked_lists.double_linked_list import DLL
+from revisited_linked_lists import DLL
 
 
 def test_append_tail() -> None:

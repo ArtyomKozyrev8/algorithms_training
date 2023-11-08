@@ -1,6 +1,6 @@
 import pytest
 
-from algorithms.revisited_linked_lists.singly_linked_list import LinkedList
+from revisited_linked_lists import LinkedList
 
 
 def test_append_head() -> None:
