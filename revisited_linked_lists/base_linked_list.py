@@ -1,12 +1,11 @@
 from abc import ABC
-from collections.abc import Sequence
 
 
 class BaseNode(ABC):
     pass
 
 
-class BaseLinkedList(Sequence):
+class BaseLinkedList:
     def __init__(self) -> None:
         self.head: BaseNode | None = None
         # self.cur_node is used for iterations (see __iter__ and __next__)
