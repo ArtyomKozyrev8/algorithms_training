@@ -155,6 +155,45 @@ def test_remove_index() -> None:
     assert str(s) == "LinkedList: N(0)->N(1)->N(2)->N(3)->N(4)->N(5)->None"
 
 
+def test_remove_value() -> None:
+    s = LinkedList()
+    with pytest.raises(ValueError):
+        s.remove_value(4)
+
+    [s.append_tail(i) for i in range(0, 6)]
+    assert str(s) == "LinkedList: N(0)->N(1)->N(2)->N(3)->N(4)->N(5)->None"
+
+    with pytest.raises(ValueError):
+        assert s.remove_value(10)
+
+    assert s.remove_value(0) == 0
+    assert str(s) == "LinkedList: N(1)->N(2)->N(3)->N(4)->N(5)->None"
+
+    assert s.remove_value(5) == 5
+    assert str(s) == "LinkedList: N(1)->N(2)->N(3)->N(4)->None"
+
+    assert s.remove_value(3) == 3
+    assert str(s) == "LinkedList: N(1)->N(2)->N(4)->None"
+
+    with pytest.raises(ValueError):
+        assert s.remove_value(6)
+
+    assert s.remove_value(2) == 2
+    assert str(s) == "LinkedList: N(1)->N(4)->None"
+
+    assert s.remove_value(4) == 4
+    assert str(s) == "LinkedList: N(1)->None"
+
+    assert s.remove_value(1) == 1
+    assert str(s) == "LinkedList: None"
+
+    with pytest.raises(ValueError):
+        assert s.remove_value(0)
+
+    [s.append_tail(i) for i in range(0, 6)]
+    assert str(s) == "LinkedList: N(0)->N(1)->N(2)->N(3)->N(4)->N(5)->None"
+
+
 def test_insert_index() -> None:
     s = LinkedList()
     s.insert_index(index=0, val=0)

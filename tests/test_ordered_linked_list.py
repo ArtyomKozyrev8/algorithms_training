@@ -227,3 +227,42 @@ def test___getitem__() -> None:
     assert s[0] == 1
     with pytest.raises(IndexError):
         s[1]
+
+
+def test_remove_value() -> None:
+    s = OrderedLinkedList()
+    with pytest.raises(ValueError):
+        s.remove_value(4)
+
+    [s.append_tail(i) for i in range(0, 6)]
+    assert str(s) == "OrderedLinkedList: N(0)->N(1)->N(2)->N(3)->N(4)->N(5)->None"
+
+    with pytest.raises(ValueError):
+        assert s.remove_value(10)
+
+    assert s.remove_value(0) == 0
+    assert str(s) == "OrderedLinkedList: N(1)->N(2)->N(3)->N(4)->N(5)->None"
+
+    assert s.remove_value(5) == 5
+    assert str(s) == "OrderedLinkedList: N(1)->N(2)->N(3)->N(4)->None"
+
+    assert s.remove_value(3) == 3
+    assert str(s) == "OrderedLinkedList: N(1)->N(2)->N(4)->None"
+
+    with pytest.raises(ValueError):
+        assert s.remove_value(6)
+
+    assert s.remove_value(2) == 2
+    assert str(s) == "OrderedLinkedList: N(1)->N(4)->None"
+
+    assert s.remove_value(4) == 4
+    assert str(s) == "OrderedLinkedList: N(1)->None"
+
+    assert s.remove_value(1) == 1
+    assert str(s) == "OrderedLinkedList: None"
+
+    with pytest.raises(ValueError):
+        assert s.remove_value(0)
+
+    [s.append_tail(i) for i in range(0, 6)]
+    assert str(s) == "OrderedLinkedList: N(0)->N(1)->N(2)->N(3)->N(4)->N(5)->None"

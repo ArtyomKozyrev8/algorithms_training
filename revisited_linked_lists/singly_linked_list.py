@@ -99,7 +99,25 @@ class LinkedList(BaseLinkedList):
                 prev = cur
                 cur = cur.next
 
-        raise IndexError(f"{self.__class__.__name__} instance does not contain index: {index}!")
+        raise IndexError(f"{self.class_name} instance does not contain index: {index}!")
+
+    def remove_value(self, value: int | str) -> int | str:
+        cur = self.head
+        prev = None
+
+        while cur is not None:
+            if cur.val == value:
+                if prev is None:
+                    self.head = cur.next
+                else:
+                    prev.next = cur.next
+
+                return cur.val
+            else:
+                prev = cur
+                cur = cur.next
+
+        raise ValueError(f"{self.class_name} instance does not contain value: {value}!")
 
     def insert_index(self, index: int, val: int | str) -> None:
         prev = None

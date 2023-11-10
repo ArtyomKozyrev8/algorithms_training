@@ -188,6 +188,49 @@ def test_remove_index() -> None:
     assert str(s) == "DLL: N(0[None, 1])=N(1[0, 3])=N(3[1, 4])=N(4[3, 5])=N(5[4, None])"
 
 
+def test_remove_value() -> None:
+    s = DLL()
+    [s.append_tail(i) for i in range(0, 6)]
+    assert str(s) == "DLL: N(0[None, 1])=N(1[0, 2])=N(2[1, 3])=N(3[2, 4])=N(4[3, 5])=N(5[4, None])"
+
+    with pytest.raises(ValueError):
+        assert s.remove_value(6)
+
+    assert s.remove_value(0) == 0
+    assert str(s) == "DLL: N(1[None, 2])=N(2[1, 3])=N(3[2, 4])=N(4[3, 5])=N(5[4, None])"
+
+    assert s.remove_value(5) == 5
+    assert str(s) == "DLL: N(1[None, 2])=N(2[1, 3])=N(3[2, 4])=N(4[3, None])"
+
+    assert s.remove_value(3) == 3
+    assert str(s) == "DLL: N(1[None, 2])=N(2[1, 4])=N(4[2, None])"
+
+    with pytest.raises(ValueError):
+        assert s.remove_value(6)
+
+    assert s.remove_value(2) == 2
+    assert str(s) == "DLL: N(1[None, 4])=N(4[1, None])"
+
+    assert s.remove_value(4) == 4
+    assert str(s) == "DLL: N(1[None, None])"
+
+    assert s.remove_value(1) == 1
+    assert str(s) == "DLL: None"
+
+    with pytest.raises(ValueError):
+        assert s.remove_value(0)
+
+    [s.append_tail(i) for i in range(0, 6)]
+    assert str(s) == "DLL: N(0[None, 1])=N(1[0, 2])=N(2[1, 3])=N(3[2, 4])=N(4[3, 5])=N(5[4, None])"
+
+    with pytest.raises(ValueError):
+        assert s.remove_value(10)
+
+    assert s.remove_value(2) == 2
+    assert str(s) == "DLL: N(0[None, 1])=N(1[0, 3])=N(3[1, 4])=N(4[3, 5])=N(5[4, None])"
+
+
+
 def test_insert_index() -> None:
     s = DLL()
     s.insert_index(index=0, val=0)

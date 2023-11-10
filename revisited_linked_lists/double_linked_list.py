@@ -125,6 +125,28 @@ class DLL(BaseLinkedList):
 
         raise IndexError(f"{self.class_name} instance does not contain index: {index}!")
 
+    def remove_value(self, value: int | str) -> int | str:
+        cur = self.head
+
+        while cur is not None:
+            if cur.val == value:
+                cur_next = cur.next
+                cur_prev = cur.prev
+                if cur_prev is None:
+                    self.head = cur_next
+                    if cur_next is not None:
+                        cur_next.prev = None
+                else:
+                    cur_prev.next = cur_next
+                    if cur_next is not None:
+                        cur_next.prev = cur_prev
+
+                return cur.val
+            else:
+                cur = cur.next
+
+        raise ValueError(f"{self.class_name} instance does not contain value: {value}!")
+
     def insert_index(self, index: int, val: int | str) -> None:
         new_node = Node(val)
         if self.head is None:
