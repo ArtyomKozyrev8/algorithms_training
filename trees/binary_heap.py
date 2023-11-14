@@ -109,3 +109,19 @@ class BinaryHeap:
                 current_position = min_child_index
 
         return
+
+    def heapify(self, input_: list[int]) -> None:
+        """Rearrange some random list to ordered structure."""
+        # create shallow copy, not to "spoil" input_ list
+        self._array = input_[:]
+
+        # start from the last level, which have children nodes
+        # start cur_index is the max index which have children
+        cur_index = len(self._array) // 2 - 1
+
+        while cur_index >= 0:  # go the root node
+            # we do it for each node, which have children
+            self._percolate_down(cur_index)
+            cur_index -= 1
+
+        return

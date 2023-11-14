@@ -56,3 +56,9 @@ def test_delete() -> None:
     assert str(s) == "BinaryHeap([])"
     with pytest.raises(IndexError):
         s.delete()
+
+
+def test_heapify() -> None:
+    s = BinaryHeap()
+    s.heapify([9, 6, 5, 2, 3])
+    str(s) == "BinaryHeap([2, 3, 5, 6, 9])"
